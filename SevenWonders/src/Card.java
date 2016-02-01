@@ -9,16 +9,16 @@ public class Card
 		//AGE 1
 		LumberYard, StonePit, ClayPool, OreVein, TreeFarm, 
 		Excavation, ClayPit, TimberYard, ForrestCave, Mine,
-		Loom, Glassworks, Press, Pawnshop, Baths, Altar,
-		Theater, Tavern, EastTradingPost, WestTradingPost,
-		Marketplace, Stockade, Barracks, GuardTower, Apothecary,
-		Workshop, Scriptorium,
+		Pawnshop, Baths, Altar, Theater, Tavern, EastTradingPost, 
+		WestTradingPost, Marketplace, Stockade, Barracks, 
+		GuardTower, Apothecary, Workshop, Scriptorium,
+		//AGE 1 AND 2
+		Loom, Glassworks, Press,
 		//AGE2
-		Sawmill, Quarry, Brickyard, Foundry, Loom, Glassworks,
-		Press, Aqueduct, Temple, Statue, Courthouse, Forum,
-		Caravansery, Vineyard, Bazar, Walls, TrainingGround,
-		Stables, ArcheryRange, Dispensary, Laboratory, Library,
-		School,
+		Sawmill, Quarry, Brickyard, Foundry, Aqueduct, Temple,
+		Statue, Courthouse, Forum, Caravansery, Vineyard, Bazar, 
+		Walls, TrainingGround, Stables, ArcheryRange, Dispensary, 
+		Laboratory, Library, School,
 		//Age3
 		Pantheon, Gardens, TownHall, Palace, Senate, Haven,
 		Lighthouse, ChamberOfCommerce, Arena, Fortifications,
@@ -145,6 +145,7 @@ public class Card
 				res2[STONE]++;
 				ans.add(res2);
 				break;
+			//AGE 1 & 2
 			case Loom: 
 				res[CLOTH]++;
 				break;
@@ -155,11 +156,43 @@ public class Card
 				res[PAPER]++;
 				break;
 			//AGE 2
-		default:
-			break;
+			case Sawmill:
+				res[WOOD]+=2;
+				break;
+			case Quarry:
+				res[STONE]+=2;
+				break;
+			case Brickyard:
+				res[CLAY]+=2;
+				break;
+			case Foundry:
+				res[ORE]+=2;
+				break;
+			case Forum:
+				res[CLOTH]++;
+				res2 = new int[7];
+				res2[GLASS]++;
+				ans.add(res2);
+				int [] res3 = new int[7];
+				res3[PAPER]++;
+				ans.add(res3);
+				break;
+			case Caravansery:
+				res[CLAY]++;
+				res2 = new int[7];
+				res2[STONE]++;
+				ans.add(res2);
+				res3 = new int[7];
+				res3[ORE]++;
+				ans.add(res3);
+				int [] res4 = new int[7];
+				res4[WOOD]++;
+				ans.add(res4);
+				break;
+			//AGE 3 gives no resources
+			default:
+				break;
 		}
-		
-		
 		return ans;
 	}
 }
