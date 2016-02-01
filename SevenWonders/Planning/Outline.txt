@@ -2,8 +2,10 @@ Hand
   Wonder
   Cards
 
-Inserted here
-OK and the website put this here 
-Things are getting better
 
-Ok then, one last test
+CARD: 
+cards will have several attributes
+color
+available resources (either or system)
+scored points (based on game state)
+
