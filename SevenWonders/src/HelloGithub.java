@@ -7,6 +7,6 @@ public class HelloGithub {
 		System.out.println("TESTING CONFIG");
 		System.out.println("Testing Concurrent Edit");
 		
-		System.out.println("Edit in the Middle")
+		System.out.println("Edit in the Middle");
 	}
 }
