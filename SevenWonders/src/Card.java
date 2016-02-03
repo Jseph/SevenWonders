@@ -96,6 +96,7 @@ public class Card
 	{
 		int [] res = new int[NUMBER_OF_RESOURCES];
 		ArrayList<int[]> ans = new ArrayList<int[]>();
+		ans.add(res);
 		switch(t)
 		{
 			//AGE 1
@@ -197,7 +198,6 @@ public class Card
 		}
 		return ans;
 	}
-	
 	//The will display the total cost of building something
 	public int[] getCost()
 	{
@@ -248,8 +248,192 @@ public class Card
 				cost[CLOTH]++;
 				break;
 			case Forum:
-				
+				cost[CLAY]+=2;
+				break;
+			case Caravansery:
+				cost[WOOD]+=2;
+				break;
+			case Walls:
+				cost[STONE]+=3;
+				break;
+			case TrainingGround:
+				cost[ORE]+=2;
+				cost[WOOD]++;
+				break;
+			case Stables:
+				cost[ORE]++;
+				cost[CLAY]++;
+				cost[WOOD]++;
+				break;
+			case ArcheryRange:
+				cost[WOOD]+=2;
+				cost[ORE]++;
+				break;
+			case Dispensary:
+				cost[ORE]+=2;
+				cost[GLASS]++;
+				break;
+			case Laboratory:
+				cost[CLAY]+=2;
+				cost[PAPER]++;
+				break;
+			case Library:
+				cost[STONE]+=2;
+				cost[CLOTH]++;
+				break;
+			case School:
+				cost[WOOD]++;
+				cost[PAPER]++;
+				break;
+			//AGE 3 (ugh)
+			case Pantheon:
+				cost[CLAY]+=2;
+				cost[ORE]++;
+				cost[PAPER]++;
+				cost[CLOTH]++;
+				cost[GLASS]++;
+				break;
+			case Gardens:
+				cost[CLAY]+=2;
+				cost[WOOD]++;
+				break;
+			case TownHall:
+				cost[STONE]+=2;
+				cost[ORE]++;
+				cost[GLASS]++;
+				break;
+			case Palace:
+				cost[CLAY]++;
+				cost[WOOD]++;
+				cost[ORE]++;
+				cost[STONE]++;
+				cost[GLASS]++;
+				cost[PAPER]++;
+				cost[CLOTH]++;
+				break;
+			case Senate:
+				cost[WOOD]+=2;
+				cost[ORE]++;
+				cost[STONE]++;
+				break;
+			case Haven:
+				cost[WOOD]++;
+				cost[STONE]++;
+				cost[CLOTH]++;
+				break;
+			case Lighthouse:
+				cost[STONE]++;
+				cost[GLASS]++;
+				break;
+			case ChamberOfCommerce:
+				cost[CLAY]+=2;
+				cost[PAPER]++;
+				break;
+			case Arena:
+				cost[STONE]+=2;
+				cost[ORE]++;
+				break;
+			case Fortifications:
+				cost[ORE]+=3;
+				cost[STONE]++;
+				break;
+			case Circus:
+				cost[STONE]+=3;
+				cost[ORE]++;
+				break;
+			case Arsenal:
+				cost[ORE]++;
+				cost[WOOD]+=2;
+				cost[CLOTH]++;
+				break;
+			case SiegeWorkshop:
+				cost[WOOD]++;
+				cost[CLAY]+=3;
+				break;
+			case Lodge:
+				cost[CLAY]+=2;
+				cost[CLOTH]++;
+				cost[PAPER]++;
+				break;
+			case Observatory:
+				cost[ORE]+=2;
+				cost[GLASS]++;
+				cost[CLOTH]++;
+				break;
+			case University:
+				cost[WOOD]+=2;
+				cost[PAPER]++;
+				cost[GLASS]++;
+				break;
+			case Academy:
+				cost[STONE]+=3;
+				cost[GLASS]++;
+				break;
+			case Study:
+				cost[WOOD]++;
+				cost[PAPER]++;
+				cost[CLOTH]++;
+				break;
+			case WorkersGuild:
+				cost[ORE]+=2;
+				cost[CLAY]++;
+				cost[STONE]++;
+				cost[WOOD]++;
+				break;
+			case CraftmensGuild:
+				cost[ORE]+=2;
+				cost[STONE]+=2;
+				break;
+			case TradersGuild:
+				cost[CLOTH]++;
+				cost[PAPER]++;
+				cost[GLASS]++;
+				break;
+			case PhilosophersGuild:
+				cost[CLAY]+=3;
+				cost[CLOTH]++;
+				cost[PAPER]++;
+				break;
+			case SpyGuild:
+				cost[CLAY]+=3;
+				cost[GLASS]++;
+				break;
+			case StrategyGuild:
+				cost[ORE]+=2;
+				cost[STONE]++;
+				cost[CLOTH]++;
+				break;
+			case ShipownersGuild:
+				cost[WOOD]+=3;
+				cost[PAPER]++;
+				cost[GLASS]++;
+				break;
+			case ScientistsGuild:
+				cost[WOOD]+=2;
+				cost[ORE]+=2;
+				cost[PAPER]++;
+				break;
+			case BuildersGuild:
+				cost[STONE]+=2;
+				cost[CLAY]+=2;
+				cost[GLASS]++;
+			
+			default:
+				break;
 		}
 		return cost;
 	}
+	//need to know the game state
+	public int onPlayCoinBonus()
+	{
+		int ans = 0;
+		switch(t)
+		{
+			case Tavern:
+				ans+=5;
+				break;
+		}
+		return ans;
+	}
+	
 }
