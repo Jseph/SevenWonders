@@ -41,6 +41,8 @@ public class Card
 	public static int CLOTH = 4;
 	public static int GLASS = 5;
 	public static int PAPER = 6;
+	public static int COIN  = 7;
+	public static int NUMBER_OF_RESOURCES = 8;
 	public Card(Type t)
 	{
 		this.t = t;
@@ -92,7 +94,7 @@ public class Card
 	}
 	public ArrayList<int[]> getResources()
 	{
-		int [] res = new int[7];
+		int [] res = new int[NUMBER_OF_RESOURCES];
 		ArrayList<int[]> ans = new ArrayList<int[]>();
 		switch(t)
 		{
@@ -111,37 +113,37 @@ public class Card
 				break;
 			case TreeFarm:
 				res[WOOD]++;
-				int[] res2 = new int[7];
+				int[] res2 = new int[NUMBER_OF_RESOURCES];
 				res2[CLAY]++;
 				ans.add(res2);
 				break;
 			case Excavation:
 				res[STONE]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[CLAY]++;
 				ans.add(res2);
 				break;
 			case ClayPit:
 				res[CLAY]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[ORE]++;
 				ans.add(res2);
 				break;
 			case TimberYard:
 				res[STONE]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[WOOD]++;
 				ans.add(res2);
 				break;
 			case ForrestCave:
 				res[WOOD]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[ORE]++;
 				ans.add(res2);
 				break;
 			case Mine:
 				res[ORE]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[STONE]++;
 				ans.add(res2);
 				break;
@@ -170,22 +172,22 @@ public class Card
 				break;
 			case Forum:
 				res[CLOTH]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[GLASS]++;
 				ans.add(res2);
-				int [] res3 = new int[7];
+				int [] res3 = new int[NUMBER_OF_RESOURCES];
 				res3[PAPER]++;
 				ans.add(res3);
 				break;
 			case Caravansery:
 				res[CLAY]++;
-				res2 = new int[7];
+				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[STONE]++;
 				ans.add(res2);
-				res3 = new int[7];
+				res3 = new int[NUMBER_OF_RESOURCES];
 				res3[ORE]++;
 				ans.add(res3);
-				int [] res4 = new int[7];
+				int [] res4 = new int[NUMBER_OF_RESOURCES];
 				res4[WOOD]++;
 				ans.add(res4);
 				break;
@@ -194,5 +196,60 @@ public class Card
 				break;
 		}
 		return ans;
+	}
+	
+	//The will display the total cost of building something
+	public int[] getCost()
+	{
+		int [] cost = new int[NUMBER_OF_RESOURCES];
+		switch(t)
+		{
+			case TreeFarm: case Excavation: case ClayPit: 
+			case TimberYard: case ForrestCave: case Mine:
+				cost[COIN]++;
+				break;
+			case Baths:
+				cost[STONE]++;
+				break;
+			case Stockade:
+				cost[WOOD]++;
+				break;
+			case Barracks:
+				cost[STONE]++;
+				break;
+			case Apothecary:
+				cost[CLOTH]++;
+				break;
+			case Workshop:
+				cost[GLASS]++;
+				break;
+			case Scriptorium:
+				cost[PAPER]++;
+				break;
+			//AGE 2
+			case Sawmill: case Quarry: case Brickyard:
+			case Foundry:
+				cost[COIN]++;
+				break;
+			case Aqueduct:
+				cost[STONE]+=3;
+				break;
+			case Temple:
+				cost[WOOD]++;
+				cost[CLAY]++;
+				cost[GLASS]++;
+				break;
+			case Statue:
+				cost[ORE]+=2;
+				cost[WOOD]++;
+				break;
+			case Courthouse:
+				cost[CLAY]+=2;
+				cost[CLOTH]++;
+				break;
+			case Forum:
+				
+		}
+		return cost;
 	}
 }
