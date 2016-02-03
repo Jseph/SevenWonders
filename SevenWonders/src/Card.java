@@ -435,5 +435,128 @@ public class Card
 		}
 		return ans;
 	}
-	
+	//Check if the card belongs in the current age
+	public boolean matchesAge(int age)
+	{
+		if(age == 1) switch(t)
+		{
+			case LumberYard: case StonePit: case ClayPool: case OreVein: case TreeFarm:  
+			case Excavation: case ClayPit: case TimberYard: case ForrestCave: case Mine:
+			case Pawnshop: case Baths: case Altar: case Theater: case Tavern: 
+			case EastTradingPost: case WestTradingPost: case Marketplace: case Stockade: 
+			case Barracks: case GuardTower: case Apothecary: case Workshop: 
+			case Scriptorium: case Loom: case Glassworks: case Press:
+				return true;
+		default:
+			break;
+		}
+		if(age == 2) switch(t)
+		{
+			case Loom: case Glassworks: case Press: case Sawmill: case Quarry: 
+			case Brickyard: case Foundry: case Aqueduct: case Temple: case Statue: 
+			case Courthouse: case Forum: case Caravansery: case Vineyard: case Bazar: 
+			case Walls: case TrainingGround: case Stables: case ArcheryRange: 
+			case Dispensary: case Laboratory: case Library: case School:
+				return true;
+		default:
+			break;
+		}
+		if(age == 3) switch(t)
+		{
+			case Pantheon: case Gardens: case TownHall: case Palace: case Senate: 
+			case Haven: case Lighthouse: case ChamberOfCommerce: case Arena: 
+			case Fortifications: case Circus: case Arsenal: case SiegeWorkshop: case Lodge: 
+			case Observatory: case University: case Academy: case Study: case WorkersGuild: 
+			case CraftmensGuild: case TradersGuild: case PhilosophersGuild: case SpyGuild: 
+			case StrategyGuild: case ShipownersGuild: case ScientistsGuild: 
+			case MagistratesGuild: case BuildersGuild:
+				return true;
+		default:
+			break;
+		}
+		return false;
+	}
+	//Get how many players a card is for
+	public int[] getNumPlayers()
+	{
+		switch(t)
+		{
+			case LumberYard: return new int[]{3,4};
+			case StonePit: return new int[]{3,5};
+			case ClayPool: return new int[]{3,4};
+			case OreVein: return new int[]{3,4};
+			case TreeFarm: return new int[]{6};
+			case Excavation: return new int[]{4};
+			case ClayPit: return new int[]{3};
+			case TimberYard: return new int[]{3};
+			case ForrestCave: return new int[]{5};
+			case Mine: return new int[]{6};
+			case Pawnshop: return new int[]{4,7};
+			case Baths: return new int[]{3,7};
+			case Altar: return new int[]{3,5};
+			case Theater: return new int[]{3,6};
+			case Tavern: return new int[]{4,5,7};
+			case EastTradingPost: return new int[]{3,7};
+			case WestTradingPost: return new int[]{3,7};
+			case Marketplace: return new int[]{3,6};
+			case Stockade: return new int[]{3,7};
+			case Barracks: return new int[]{3,5};
+			case GuardTower: return new int[]{3,4};
+			case Apothecary: return new int[]{3,5};
+			case Workshop: return new int[]{3,7};
+			case Scriptorium: return new int[]{3,4};
+			case Loom: return new int[]{3,6};
+			case Glassworks: return new int[]{3,6};
+			case Press: return new int[]{3,6};
+			case Sawmill: return new int[]{3,4};
+			case Quarry: return new int[]{3,4};
+			case Brickyard: return new int[]{3,4};
+			case Foundry: return new int[]{3,4};
+			case Aqueduct: return new int[]{3,7};
+			case Temple: return new int[]{3,6};
+			case Statue: return new int[]{3,7};
+			case Courthouse: return new int[]{3,5};
+			case Forum: return new int[]{3,6,7};
+			case Caravansery: return new int[]{3,5,6};
+			case Vineyard: return new int[]{3,6};
+			case Bazar: return new int[]{4,7};
+			case Walls: return new int[]{3,7};
+			case TrainingGround: return new int[]{4,6,7};
+			case Stables: return new int[]{3,5};
+			case ArcheryRange: return new int[]{3,6};
+			case Dispensary: return new int[]{3,4};
+			case Laboratory: return new int[]{3,5};
+			case Library: return new int[]{3,6};
+			case School: return new int[]{3,7};
+			case Pantheon: return new int[]{3,6};
+			case Gardens: return new int[]{3,4};
+			case TownHall: return new int[]{3,5,6};
+			case Palace: return new int[]{3,7};
+			case Senate: return new int[]{3,5};
+			case Haven: return new int[]{3,4};
+			case Lighthouse: return new int[]{3,6};
+			case ChamberOfCommerce: return new int[]{4,6};
+			case Arena: return new int[]{3,5,7};
+			case Fortifications: return new int[]{3,7};
+			case Circus: return new int[]{4,5,6};
+			case Arsenal: return new int[]{3,4,7};
+			case SiegeWorkshop: return new int[]{3,5};
+			case Lodge: return new int[]{3,6};
+			case Observatory: return new int[]{3,7};
+			case University: return new int[]{3,4};
+			case Academy: return new int[]{3,7};
+			case Study: return new int[]{3,5};
+			case WorkersGuild: return new int[]{};
+			case CraftmensGuild: return new int[]{};
+			case TradersGuild: return new int[]{};
+			case PhilosophersGuild: return new int[]{};
+			case SpyGuild: return new int[]{};
+			case StrategyGuild: return new int[]{};
+			case ShipownersGuild: return new int[]{};
+			case ScientistsGuild: return new int[]{};
+			case MagistratesGuild: return new int[]{};
+			case BuildersGuild: return new int[]{};
+		}
+		return new int[]{};
+	}
 }

@@ -11,8 +11,15 @@ public class Player
 	ArrayList<Card> playedCards;
 	//Something about players wonder
 	boolean isDummy;
+	boolean hasFreePlay;
+	boolean canPlayLastCard;
 	Player leftPlayer;
 	Player rightPlayer;
 	int numCoins;
 	int militaryCounter;
+	//public Player(public )
 }
+
+
+
+
