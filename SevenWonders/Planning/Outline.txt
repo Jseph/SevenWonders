@@ -1,0 +1,11 @@
+Hand
+  Wonder
+  Cards
+
+
+CARD: 
+cards will have several attributes
+color
+available resources (either or system)
+scored points (based on game state)
+
