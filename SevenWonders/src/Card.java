@@ -1,4 +1,10 @@
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 //Ok so this is not a clean way to do this but I am going to add
 //every type of card in the card class.  Get ready for a giant file
@@ -558,5 +564,15 @@ public class Card
 			case BuildersGuild: return new int[]{};
 		}
 		return new int[]{};
+	}
+	public Image getImage()
+	{
+		try {
+			System.out.println("/images/cards/" + t.toString().toLowerCase()+".png");
+			return ImageIO.read(getClass().getResourceAsStream("/images/cards/" + t.toString().toLowerCase()+".png"));
+		} catch (Exception e) {
+			System.err.println("Could not find image for "+t);
+			return new BufferedImage(180, 275, BufferedImage.TYPE_3BYTE_BGR);
+		}
 	}
 }
