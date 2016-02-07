@@ -15,6 +15,8 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	int x, velX;
 	int mouseX, mouseY;
 	int cardNum;
+	boolean isCardSelected;
+	int selectedCard;
 	public static void main(String[] args)
 	{
 		for(double d = -20; d<20; d+=0.1)
@@ -24,7 +26,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 		new PlayingWithGraphics();
 	}
 	public PlayingWithGraphics() {
-		tm = new Timer(50, this);
+		tm = new Timer(100, this);
 		cards = new ArrayList<Image>();
 		for(Card.Type t: Card.Type.values())
 		{
@@ -54,10 +56,10 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 		int cardWidth = cards.get(0).getWidth(null);
 		int cardHeight = cards.get(0).getHeight(null);
 		
+		int magnifiedCardHeight = cardHeight;
 		//Figure out if the scale is appropriate
 		scale = Math.min(scale, 
 				screenWidth/(cardWidth*((1+space)*(cardNum) + space)));
-		//System.out.println(cardWidth*((1+space)*(cardNum) + space))/screenWidth);
 		//Figure out what the x offset will be so this is centered
 		int xOffset = (int)((screenWidth - cardWidth*((1+space)*cardNum + space)*scale)/2);
 		int yOffset = (int) (screenHeight - cardHeight*scale);
@@ -67,6 +69,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 		
 		if(mousedOver == false)
 		{
+			isCardSelected = false;
 			for(int i=0; i<cardNum; i++)
 				g.drawImage(cards.get(i), 
 					(int)(xOffset + cardWidth*((1+space)*i + space)*scale),
@@ -74,45 +77,55 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 					(int)(cardWidth*scale),
 					(int)(cardHeight*scale),
 					this);
-			//System.out.println("DREWIT");
 		}
 		else
 		{
 			//Figure out normal distribution scaling
 			//How far do we want it to extend? (sigma)
 			double sigma = cardWidth*scale;
-			double scale2 = 3*(cardWidth*(1-scale))/((NORMSDIST(cardWidth/(2*sigma))-0.5)*2);
+			double scale2 = (cardWidth - cardWidth*scale)/((NORMSDIST(cardWidth*scale/2/sigma)-NORMSDIST(-cardWidth*scale/2/sigma)));
 			xOffset += cardWidth*space*scale;
 			int oldXOffset = xOffset;
 			int x1 = xOffset;
 			int x2 = (int)(xOffset + cardWidth*((1+space)*cardNum)*scale - cardWidth*space*scale);
+			int y1 = (int) (screenHeight - cardHeight*scale);
+			int y2 = screenHeight;			
+			//Scale the growth by how far the pointer is from the cards
+			double dx = Math.max(0, Math.max(x1 - mouseX, mouseX - x2));
+			double dy = Math.max(0, Math.max(y1 - mouseY , mouseY - y2));
+			double growSigma = cardHeight*scale/2;
+			scale2 *= 2*(1 - NORMSDIST(Math.sqrt(dx*dx + dy*dy)/growSigma));
+			
 			int widthExpanded = 0;
-			System.out.println(mouseX+","+x1);
 			if(mouseX > x1)
 				widthExpanded = (int) (scale2*(0.5 - NORMSDIST((x1-mouseX)/sigma)));
-			System.out.println("WIDTH EXPANDED 1:"+widthExpanded);
 			if(mouseX > x2)
 				widthExpanded -= scale2*(NORMSDIST((0)/sigma) - (NORMSDIST((x2-mouseX)/sigma)));
-			System.out.println("Width Expanded "+widthExpanded+" vals:"+((x2-mouseX)/sigma)+","+((x1-mouseX)/sigma));
-			//if(mouseX>x1 && mouseX<x2)
-				xOffset -= widthExpanded;// * (mouseX-x1)/(x2-x1);
-			//if the curve is hanging off the edge then increment xOffset by that much
-			//xOffset += scale2*(NORMSDIST((oldXOffset-mouseX)/sigma))/2;
+			xOffset -= widthExpanded;// * (mouseX-x1)/(x2-x1);
+
+			isCardSelected = false;
 			for(int i=0; i<cardNum; i++)
 			{
 				//Draw the card 
 				x1 = (int)(oldXOffset + cardWidth*((1+space)*i)*scale);
-				System.out.println("  X1:"+x1);
 				x2 = (int)(x1 + cardWidth*scale);
 				int width = (int) (cardWidth*scale + scale2*(NORMSDIST((x2-mouseX)/sigma) - NORMSDIST((x1-mouseX)/sigma)));
 				double cScale = width/(cardWidth + 0.0);
-				System.out.println("x1: "+x1+","+mouseX+" x2: "+x2+" cScale: "+cScale);
 				g.drawImage(cards.get(i), 
 						(int)(xOffset),
 						(int)(yOffset - cardHeight*(cScale - scale)),
 						(int)(cardWidth*cScale),
 						(int)(cardHeight*cScale),
 						this);
+				Rectangle cardArea = new Rectangle(xOffset, (int)(yOffset-cardHeight*(cScale-scale)), (int)(cardWidth*cScale),(int) (cardHeight*cScale));
+				if(cardArea.contains(mouseX, mouseY))
+				{
+					isCardSelected = true;
+					selectedCard = i;
+					//Draw a yellow boarder around the card
+					g.setColor(Color.yellow);
+					g.drawRoundRect(cardArea.x-1, cardArea.y-1, cardArea.width+2, cardArea.height+2, 4, 4);
+				}
 				xOffset += width;
 				//"Draw" the gap
 				x1 = x2;
@@ -120,7 +133,6 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 				xOffset += cardWidth*scale*space + scale2*(NORMSDIST((x2-mouseX)/sigma) - NORMSDIST((x1-mouseX)/sigma));
 			}
 		}
-		System.out.println("REPAINT");
 	}
 	
 	private static double erf(double x)
