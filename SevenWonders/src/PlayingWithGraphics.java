@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-public class PlayingWithGraphics extends JFrame implements ActionListener, KeyListener, MouseMotionListener
+import java.awt.image.BufferedImage;
+public class PlayingWithGraphics extends JFrame implements ActionListener, KeyListener, MouseMotionListener, MouseListener
 {
 	Timer tm;
 	ArrayList<Image> cards;
@@ -17,6 +19,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	int cardNum;
 	boolean isCardSelected;
 	int selectedCard;
+	BufferedImage buffer;
 	public static void main(String[] args)
 	{
 		for(double d = -20; d<20; d+=0.1)
@@ -34,20 +37,25 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 			cards.add(c.getImage());
 		}
 		cardNum = 5;
+		buffer = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
 		tm.start();
 		this.addKeyListener(this);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		this.addMouseMotionListener(this);
+		this.addMouseListener(this);
 	}
 	
 	public void update(Graphics g) {paint(g);};
-	public void paint(Graphics g)
+	public void paint(Graphics g2)
 	{
-		g.setColor(Color.DARK_GRAY);
 		int screenWidth = this.getWidth();
 		int screenHeight = this.getHeight();
+		if(buffer.getWidth() != screenWidth || buffer.getHeight()!=screenHeight)
+			buffer = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_3BYTE_BGR);
+		Graphics g = buffer.getGraphics();
+		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, screenWidth, screenHeight);
 		double scale = 1.0/4;
 		
@@ -124,7 +132,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 					selectedCard = i;
 					//Draw a yellow boarder around the card
 					g.setColor(Color.yellow);
-					g.drawRoundRect(cardArea.x-1, cardArea.y-1, cardArea.width+2, cardArea.height+2, 4, 4);
+					g.drawRoundRect(cardArea.x, cardArea.y, cardArea.width, cardArea.height, 4, 4);
 				}
 				xOffset += width;
 				//"Draw" the gap
@@ -133,6 +141,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 				xOffset += cardWidth*scale*space + scale2*(NORMSDIST((x2-mouseX)/sigma) - NORMSDIST((x1-mouseX)/sigma));
 			}
 		}
+		g2.drawImage(buffer, 0,0,null);
 	}
 	
 	private static double erf(double x)
@@ -200,6 +209,36 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//If a card is selected "remove" it
+		if(isCardSelected)
+		{
+			cards.add(cards.remove(selectedCard));
+			cardNum--;
+		}
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
