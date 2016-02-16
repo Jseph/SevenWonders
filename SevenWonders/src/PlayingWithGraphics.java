@@ -20,6 +20,8 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	boolean isCardSelected;
 	int selectedCard;
 	BufferedImage buffer;
+	DetailsWindow dw;
+	PlayedCards pc;
 	public static void main(String[] args)
 	{
 		for(double d = -20; d<20; d+=0.1)
@@ -30,6 +32,11 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	}
 	public PlayingWithGraphics() {
 		tm = new Timer(100, this);
+		dw = new DetailsWindow();
+		pc = new PlayedCards(PlayedCards.Orientation.Left, new ArrayList<Card>(), dw);
+		pc.setRenderedRectangle(new Rectangle(440,20,400,100));
+		dw.setRenderedRectangle(new Rectangle(20,20,400,600));
+		dw.setDetailsCard(new Card(Card.Type.Arsenal));
 		cards = new ArrayList<Image>();
 		for(Card.Type t: Card.Type.values())
 		{
@@ -91,7 +98,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 			//Figure out normal distribution scaling
 			//How far do we want it to extend? (sigma)
 			double sigma = cardWidth*scale;
-			double scale2 = (cardWidth - cardWidth*scale)/((NORMSDIST(cardWidth*scale/2/sigma)-NORMSDIST(-cardWidth*scale/2/sigma)));
+			double scale2 = 1.15*(cardWidth - cardWidth*scale)/((NORMSDIST(cardWidth*scale/2/sigma)-NORMSDIST(-cardWidth*scale/2/sigma)));
 			xOffset += cardWidth*space*scale;
 			int oldXOffset = xOffset;
 			int x1 = xOffset;
@@ -112,6 +119,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 			xOffset -= widthExpanded;// * (mouseX-x1)/(x2-x1);
 
 			isCardSelected = false;
+			//dw.setDetailsCard(null);
 			for(int i=0; i<cardNum; i++)
 			{
 				//Draw the card 
@@ -133,6 +141,7 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 					//Draw a yellow boarder around the card
 					g.setColor(Color.yellow);
 					g.drawRoundRect(cardArea.x, cardArea.y, cardArea.width, cardArea.height, 4, 4);
+					dw.setDetailsCard(new Card(Card.Type.values()[i]));
 				}
 				xOffset += width;
 				//"Draw" the gap
@@ -141,6 +150,10 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 				xOffset += cardWidth*scale*space + scale2*(NORMSDIST((x2-mouseX)/sigma) - NORMSDIST((x1-mouseX)/sigma));
 			}
 		}
+		dw.renderSelf(g);
+		g.setColor(Color.black);
+		g.fillRect(440,20,400,100);
+		pc.renderSelf(g);
 		g2.drawImage(buffer, 0,0,null);
 	}
 	
@@ -209,12 +222,14 @@ public class PlayingWithGraphics extends JFrame implements ActionListener, KeyLi
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
+		pc.updateMouseLocation(mouseX, mouseY);
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		//If a card is selected "remove" it
 		if(isCardSelected)
 		{
+			pc.addCard(new Card(Card.Type.values()[selectedCard]));
 			cards.add(cards.remove(selectedCard));
 			cardNum--;
 		}

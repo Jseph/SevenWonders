@@ -1,3 +1,8 @@
+Player
+	hand         -> ArrayList<Card>
+	wonder       -> Wonder
+	wonder level -> int
+	resources    -> [int] (
 Hand
   Wonder
   Cards

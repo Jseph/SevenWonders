@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 //Ok so this is not a clean way to do this but I am going to add
 //every type of card in the card class.  Get ready for a giant file
-public class Card 
+public class Card implements Comparable<Card>
 {
 	public Type t;
 	public enum Type{
@@ -454,7 +454,7 @@ public class Card
 			case Scriptorium: case Loom: case Glassworks: case Press:
 				return true;
 		default:
-			break;
+			return false;
 		}
 		if(age == 2) switch(t)
 		{
@@ -465,7 +465,7 @@ public class Card
 			case Dispensary: case Laboratory: case Library: case School:
 				return true;
 		default:
-			break;
+			return false;
 		}
 		if(age == 3) switch(t)
 		{
@@ -478,7 +478,7 @@ public class Card
 			case MagistratesGuild: case BuildersGuild:
 				return true;
 		default:
-			break;
+			return false;
 		}
 		return false;
 	}
@@ -574,5 +574,19 @@ public class Card
 			System.err.println("Could not find image for "+t);
 			return new BufferedImage(180, 275, BufferedImage.TYPE_3BYTE_BGR);
 		}
+	}
+	@Override
+	public int compareTo(Card o) 
+	{
+		if(this.getColor().compareTo(o.getColor())!=0)
+			return this.getColor().compareTo(o.getColor());
+		for(int i=1; i<3; i++)
+		{
+			if(this.matchesAge(i) && !o.matchesAge(i))
+				return -1;
+			if(o.matchesAge(i) && !this.matchesAge(i))
+				return 1;
+		}
+		return t.name().compareTo(o.t.name());
 	}
 }
