@@ -14,7 +14,7 @@ public class Card implements Comparable<Card>
 	public enum Type{
 		//AGE 1
 		LumberYard, StonePit, ClayPool, OreVein, TreeFarm, 
-		Excavation, ClayPit, TimberYard, ForrestCave, Mine,
+		Excavation, ClayPit, TimberYard, ForestCave, Mine,
 		Pawnshop, Baths, Altar, Theater, Tavern, EastTradingPost, 
 		WestTradingPost, Marketplace, Stockade, Barracks, 
 		GuardTower, Apothecary, Workshop, Scriptorium,
@@ -30,8 +30,8 @@ public class Card implements Comparable<Card>
 		Lighthouse, ChamberOfCommerce, Arena, Fortifications,
 		Circus, Arsenal, SiegeWorkshop, Lodge, Observatory,
 		University, Academy, Study, WorkersGuild,
-		CraftmensGuild, TradersGuild, PhilosophersGuild,
-		SpyGuild, StrategyGuild, ShipownersGuild, 
+		CraftsmensGuild, TradersGuild, PhilosophersGuild,
+		SpiesGuild, StrategistsGuild, ShipownersGuild, 
 		ScientistsGuild, MagistratesGuild, BuildersGuild
 	}
 	//Consider reformatting to be all caps
@@ -59,7 +59,7 @@ public class Card implements Comparable<Card>
 		{
 			case LumberYard: case StonePit: case ClayPool:
 			case OreVein: case TreeFarm: case Excavation: 
-			case ClayPit: case TimberYard: case ForrestCave:
+			case ClayPit: case TimberYard: case ForestCave:
 			case Mine: case Sawmill: case Quarry: 
 			case Brickyard: case Foundry:
 				return Color.Brown;
@@ -88,9 +88,9 @@ public class Card implements Comparable<Card>
 			case University: case Academy: case Study: 
 				return Color.Green;
 			case WorkersGuild:
-			case CraftmensGuild: case TradersGuild: 
-			case PhilosophersGuild: case SpyGuild: 
-			case StrategyGuild: case ShipownersGuild:
+			case CraftsmensGuild: case TradersGuild: 
+			case PhilosophersGuild: case SpiesGuild: 
+			case StrategistsGuild: case ShipownersGuild:
 			case ScientistsGuild: case MagistratesGuild:
 			case BuildersGuild:
 				return Color.Purple;
@@ -142,7 +142,7 @@ public class Card implements Comparable<Card>
 				res2[WOOD]++;
 				ans.add(res2);
 				break;
-			case ForrestCave:
+			case ForestCave:
 				res[WOOD]++;
 				res2 = new int[NUMBER_OF_RESOURCES];
 				res2[ORE]++;
@@ -211,7 +211,7 @@ public class Card implements Comparable<Card>
 		switch(t)
 		{
 			case TreeFarm: case Excavation: case ClayPit: 
-			case TimberYard: case ForrestCave: case Mine:
+			case TimberYard: case ForestCave: case Mine:
 				cost[COIN]++;
 				break;
 			case Baths:
@@ -386,7 +386,7 @@ public class Card implements Comparable<Card>
 				cost[STONE]++;
 				cost[WOOD]++;
 				break;
-			case CraftmensGuild:
+			case CraftsmensGuild:
 				cost[ORE]+=2;
 				cost[STONE]+=2;
 				break;
@@ -400,11 +400,11 @@ public class Card implements Comparable<Card>
 				cost[CLOTH]++;
 				cost[PAPER]++;
 				break;
-			case SpyGuild:
+			case SpiesGuild:
 				cost[CLAY]+=3;
 				cost[GLASS]++;
 				break;
-			case StrategyGuild:
+			case StrategistsGuild:
 				cost[ORE]+=2;
 				cost[STONE]++;
 				cost[CLOTH]++;
@@ -447,7 +447,7 @@ public class Card implements Comparable<Card>
 		if(age == 1) switch(t)
 		{
 			case LumberYard: case StonePit: case ClayPool: case OreVein: case TreeFarm:  
-			case Excavation: case ClayPit: case TimberYard: case ForrestCave: case Mine:
+			case Excavation: case ClayPit: case TimberYard: case ForestCave: case Mine:
 			case Pawnshop: case Baths: case Altar: case Theater: case Tavern: 
 			case EastTradingPost: case WestTradingPost: case Marketplace: case Stockade: 
 			case Barracks: case GuardTower: case Apothecary: case Workshop: 
@@ -473,8 +473,8 @@ public class Card implements Comparable<Card>
 			case Haven: case Lighthouse: case ChamberOfCommerce: case Arena: 
 			case Fortifications: case Circus: case Arsenal: case SiegeWorkshop: case Lodge: 
 			case Observatory: case University: case Academy: case Study: case WorkersGuild: 
-			case CraftmensGuild: case TradersGuild: case PhilosophersGuild: case SpyGuild: 
-			case StrategyGuild: case ShipownersGuild: case ScientistsGuild: 
+			case CraftsmensGuild: case TradersGuild: case PhilosophersGuild: case SpiesGuild: 
+			case StrategistsGuild: case ShipownersGuild: case ScientistsGuild: 
 			case MagistratesGuild: case BuildersGuild:
 				return true;
 		default:
@@ -495,7 +495,7 @@ public class Card implements Comparable<Card>
 			case Excavation: return new int[]{4};
 			case ClayPit: return new int[]{3};
 			case TimberYard: return new int[]{3};
-			case ForrestCave: return new int[]{5};
+			case ForestCave: return new int[]{5};
 			case Mine: return new int[]{6};
 			case Pawnshop: return new int[]{4,7};
 			case Baths: return new int[]{3,7};
@@ -553,11 +553,11 @@ public class Card implements Comparable<Card>
 			case Academy: return new int[]{3,7};
 			case Study: return new int[]{3,5};
 			case WorkersGuild: return new int[]{};
-			case CraftmensGuild: return new int[]{};
+			case CraftsmensGuild: return new int[]{};
 			case TradersGuild: return new int[]{};
 			case PhilosophersGuild: return new int[]{};
-			case SpyGuild: return new int[]{};
-			case StrategyGuild: return new int[]{};
+			case SpiesGuild: return new int[]{};
+			case StrategistsGuild: return new int[]{};
 			case ShipownersGuild: return new int[]{};
 			case ScientistsGuild: return new int[]{};
 			case MagistratesGuild: return new int[]{};
