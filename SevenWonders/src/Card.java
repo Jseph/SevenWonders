@@ -423,7 +423,7 @@ public class Card implements Comparable<Card>
 				cost[STONE]+=2;
 				cost[CLAY]+=2;
 				cost[GLASS]++;
-			
+			        break;
 			default:
 				break;
 		}
@@ -438,6 +438,8 @@ public class Card implements Comparable<Card>
 			case Tavern:
 				ans+=5;
 				break;
+                       default:
+                            break;
 		}
 		return ans;
 	}

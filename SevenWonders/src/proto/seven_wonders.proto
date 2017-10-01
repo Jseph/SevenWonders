@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "server";
+option java_outer_classname = "SevenWondersProto";
+option objc_class_prefix = "SW";
+
+package wonders;
+
+message JoinRoomRequest {
+  Player player = 1;
+  string room = 2;
+}
+
+message JoinRoomResponse {
+  repeated Player players = 1;
+}
+
+message Player {
+  string name = 1;
+  bool ready = 2;
+}
+
+service SevenWondersServer {
+  rpc JoinRoom (JoinRoomRequest) returns (JoinRoomResponse) {} 
+}
+
+
