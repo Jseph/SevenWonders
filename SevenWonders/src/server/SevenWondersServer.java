@@ -84,7 +84,7 @@ public class SevenWondersServer {
       if (!rooms.containsKey(req.getRoomName())) {
         rooms.put(req.getRoomName(), new ArrayList<>());
       }
-      ArrayList<Player> players = rooms.get(req.getRoomName);
+      ArrayList<Player> players = rooms.get(req.getRoomName());
       for (int i = 0; i < players.size(); i++) {
         if (players.get(i).getName().equals(req.getPlayer().getName())) {
           players.remove(i--);

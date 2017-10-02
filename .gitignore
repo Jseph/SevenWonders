@@ -1,0 +1,5 @@
+*.class
+bazel-*
+*~
+*.swp
+*.swo
