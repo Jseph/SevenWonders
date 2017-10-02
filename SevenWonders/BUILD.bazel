@@ -5,6 +5,42 @@ proto_library(
     srcs = ["src/proto/seven_wonders.proto"],
 )
 
+java_proto_library(
+    name = "seven_wonders_java_proto",
+    deps = [":seven_wonders_proto"],
+)
+
+java_grpc_library(
+    name = "seven_wonders_java_grpc",
+    srcs = [":seven_wonders_proto"],
+    deps = ["seven_wonders_java_proto"],
+)
+
+java_library(
+  name = "server_lib",
+  srcs = glob(["src/server/*.java"],),
+  deps = [":seven_wonders_java_grpc",
+          ":seven_wonders_java_proto",
+          "@com_google_api_grpc_proto_google_common_protos//jar",
+          "@com_google_code_findbugs_jsr305//jar",
+          "@com_google_guava_guava//jar",
+          "@com_google_protobuf_java//:protobuf_java",
+          "@com_google_protobuf_java//:protobuf_java_util",
+          "@grpc_java//core",
+          "@grpc_java//protobuf",
+          "@grpc_java//stub",            
+],
+)
+
+java_binary(
+    name = "seven_wonders_server",
+    main_class = "server.SevenWondersServer",
+    runtime_deps = [
+      "@grpc_java//netty",
+      ":server_lib",
+    ],
+)
+
 java_library(
     name = "card",
     srcs = ["src/Card.java"],

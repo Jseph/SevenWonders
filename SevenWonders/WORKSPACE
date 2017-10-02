@@ -1,0 +1,11 @@
+workspace(name = "wonders")
+
+git_repository(
+    name = "grpc_java",
+    remote = "https://github.com/grpc/grpc-java.git",
+    tag = "v1.6.1",
+)
+
+load("@grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories()
